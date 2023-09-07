@@ -20,13 +20,6 @@ class _HomePageState extends State<HomePage> {
         widthFactor: 1,
         child: Column(
           children: [
-            Row(
-              children: [
-                Text("Feeding Hope\n One Paw at a Time",
-                    style: TextStyles.text),
-                Icon(IconData(0xe4a1, fontFamily: 'MaterialIcons')),
-              ],
-            ),
             Text(
               "Menu",
               style: TextStyles.text,

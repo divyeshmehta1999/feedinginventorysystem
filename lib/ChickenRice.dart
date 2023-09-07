@@ -1,5 +1,7 @@
+import 'package:anuaunty/ChickenOrderData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'utils.dart';
 
@@ -11,22 +13,55 @@ class ChickenRice extends StatefulWidget {
 }
 
 class _ChickenRiceState extends State<ChickenRice> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController _orderId = TextEditingController();
   TextEditingController _orderWeight = TextEditingController();
   TextEditingController _contact = TextEditingController();
   TextEditingController _orderValue = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          {
-            FirebaseFirestore.instance.collection('FoodMenu').add({
-              'Ordered By': _orderId.text,
-              'Order Weight': _orderWeight.text,
-              'Order Value': _orderValue.text,
-              'Order Contact': _contact.text,
-            });
+          if (_formKey.currentState!.validate()) {
+            // Form is valid, proceed with adding to Firestore
+            Get.dialog(AlertDialog(
+              title: Text('Order Details'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    FirebaseFirestore.instance.collection('ChickenRice').add({
+                      'Order By': _orderId.text,
+                      'Order Weight': _orderWeight.text,
+                      'Order Value': _orderValue.text,
+                      'Order Contact': _contact.text,
+                    });
+                    _orderId.text = '';
+                    _orderWeight.text = '';
+                    _orderValue.text = '';
+                    _contact.text = '';
+                    Get.back();
+                  },
+                  child: Text('Confirm'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text('Edit'),
+                ),
+              ],
+              content: Column(
+                children: [
+                  Text('Order ID: ${_orderId.text}'),
+                  Text('Order Weight: ${_orderWeight.text}'),
+                  Text('Order Value: ${_orderValue.text}'),
+                  Text('Order Contact: ${_contact.text}'),
+                ],
+              ),
+            ));
           }
         },
         icon: const Icon(IconData(0xe4a1, fontFamily: 'MaterialIcons')),
@@ -37,39 +72,97 @@ class _ChickenRiceState extends State<ChickenRice> {
         child: FractionallySizedBox(
           heightFactor: 1,
           widthFactor: 1,
-          child: Column(
-            children: [
-              const Text(
-                "Order Id",
-                style: TextStyles.text,
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Order Id",
+                      style: TextStyles.text,
+                    ),
+                    TextFormField(
+                      controller: _orderId,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(width: 5)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Order ID is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Text(
+                      "Order Weight",
+                      style: TextStyles.text,
+                    ),
+                    TextFormField(
+                      controller: _orderWeight,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(width: 5)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Order Weight is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Text(
+                      "Order Value",
+                      style: TextStyles.text,
+                    ),
+                    TextFormField(
+                      controller: _orderValue,
+                      keyboardType: const TextInputType.numberWithOptions(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(width: 5)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Order Value is required';
+                        }
+                        // You can add more specific validation here if needed
+                        return null;
+                      },
+                    ),
+                    const Text(
+                      "Order Contact",
+                      style: TextStyles.text,
+                    ),
+                    TextFormField(
+                      controller: _contact,
+                      keyboardType: const TextInputType.numberWithOptions(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(width: 5)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Order Contact is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Get.to(() => ChickenOrderData());
+                        },
+                        child: Text("Order Data"))
+                  ],
+                ),
               ),
-              TextFormField(
-                controller: _orderId,
-              ),
-              const Text(
-                "Order Weight",
-                style: TextStyles.text,
-              ),
-              TextFormField(
-                controller: _orderWeight,
-              ),
-              const Text(
-                "Order Value",
-                style: TextStyles.text,
-              ),
-              TextFormField(
-                controller: _orderValue,
-                keyboardType: const TextInputType.numberWithOptions(),
-              ),
-              const Text(
-                "Order Contact",
-                style: TextStyles.text,
-              ),
-              TextFormField(
-                controller: _contact,
-                keyboardType: const TextInputType.numberWithOptions(),
-              ),
-            ],
+            ),
           ),
         ),
       ),
