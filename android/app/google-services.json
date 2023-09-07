@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "278539951976",
+    "project_id": "anuaunty-98b6b",
+    "storage_bucket": "anuaunty-98b6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278539951976:android:53edb79300345fcbac40dd",
+        "android_client_info": {
+          "package_name": "com.example.anuaunty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278539951976-nsjva5psnr9f0gs9lnne6390pqb4iiqf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anuaunty",
+            "certificate_hash": "3864e647af87dadd002c8ed4dda1b6b01b1414f9"
+          }
+        },
+        {
+          "client_id": "278539951976-kf9khnd674frjjq5n5mnbhg045fm9up9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4S4pk1uFe3IAxg5n-7vQINurhW2ByrIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278539951976-kf9khnd674frjjq5n5mnbhg045fm9up9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
